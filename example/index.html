@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>PJAXPage Example. Pagination controls solution for pjax. pushState + ajax = pjax. </title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/jquery-3.2.1.min.js"></script>
+<!-- <script src="https://cdn.bootcss.com/jquery/1.7.2/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>  -->
+<style type="text/css">
+	body {
+	  margin-left: 5px;
+	}
+	.btn {
+		margin-bottom: 10px;
+	}
+</style>
+
+</head>
+<body>
+<h2>What <a href="https://github.com/xixifeng/pjaxpage">PJAXPage</a> ?</h2>
+<p>Pagination controls solution for pjax. pushState + ajax = pjax.<p>
+<p>Git repository: </p>
+<ul>
+	<li><a href="https://github.com/xixifeng/pjaxpage" target="_self">https://github.com/xixifeng/pjaxpage</a></li>
+	<li><a href="https://gitee.com/xixifeng.com/pjaxpage" target="_self">https://gitee.com/xixifeng.com/pjaxpage</a></li>
+</ul>	
+<h2>Example: </h2>
+		<table class="table table-bordered table-hover">
+				<tr class="bg">
+					<th>序号</th>
+					<th>词组</th>
+					<th>拼音</th>
+					<th>多选项</th>
+					<th>正确答案</th>
+					<th>词义</th>
+				</tr>
+			<!-- 分页数据 -->
+			<tbody id="dataListBox">
+			</tbody>
+		</table>
+
+	<!-- 分页索引 -->
+	<div id="pageCodeBox"></div>
+
+<h2>Switch pagination model</h2>
+<div class="btn-group"><button type="button" class="btn btn-success" id="numberModel">pjaxPage.numberModel.js</button></div>
+<div class="btn-group"><button type="button" class="btn btn-success" id="singleModel">pjaxPage.singleModel.js</button></div>
+<div class="btn-group"><button type="button" class="btn btn-success" id="textModel">pjaxPage.textModel.js</button></div>
+<div class="btn-group"><button type="button" class="btn btn-success" id="toggleModel">pjaxPage.toggleModel.js</button></div>
+<div class="btn-group"><button type="button" class="btn btn-success" id="simpleModel">pjaxPage.simpleModel.js</button></div>
+
+	<script src="../src/pjaxPage.js"></script>
+	<!-- 注意: 实际应用中只要选一个适合自己的分页模型就行了,本页为了能够演示所有分页模型,因此全部引用了 -->
+	<script src="../src/pjaxPage.numberModel.js"></script>
+	<script src="../src/pjaxPage.singleModel.js"></script>
+	<script src="../src/pjaxPage.textModel.js"></script>
+	<script src="../src/pjaxPage.toggleModel.js"></script>
+	<script src="../src/pjaxPage.simpleModel.js"></script>
+	<!-- 主配置 -->
+	<script src="js/main.js"></script>
+	
+	<!-- 模型配置 -->
+	<script src="js/models.js"></script>
+	<!-- 切换分页模型 -->
+	<script type="text/javascript">
+		 $("button").click(function(){
+			 pjaxPage.pageModel = model[$(this).attr("id")];
+			 pjaxPage.initPage();
+		 });
+	</script>
+	<br><br><br>
+</body>
+</html>
+
+

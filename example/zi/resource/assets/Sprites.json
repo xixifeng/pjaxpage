@@ -1,0 +1,26 @@
+{
+"file": "Sprites.png"
+,
+"frames": {
+	"ansBlock": {"x":721, "y":101, "w":260, "h":170, "offX":0,"offY":0,"sourceW":260,"sourceH":170},
+	"ansBlockLong": {"x":0, "y":1006, "w":560, "h":80, "offX":0,"offY":0,"sourceW":560,"sourceH":80},
+	"bottomTexture": {"x":0, "y":1087, "w":345, "h":81, "offX":0,"offY":0,"sourceW":345,"sourceH":81},
+	"clock": {"x":721, "y":272, "w":156, "h":141, "offX":0,"offY":0,"sourceW":156,"sourceH":141},
+	"durBg": {"x":561, "y":833, "w":312, "h":274, "offX":0,"offY":0,"sourceW":312,"sourceH":274},
+	"falseIcon": {"x":624, "y":1108, "w":56, "h":56, "offX":0,"offY":0,"sourceW":56,"sourceH":56},
+	"goHomeIcon": {"x":874, "y":1015, "w":95, "h":95, "offX":0,"offY":0,"sourceW":95,"sourceH":95},
+	"greenBtn": {"x":721, "y":0, "w":270, "h":100, "offX":0,"offY":0,"sourceW":270,"sourceH":100},
+	"helpIcon": {"x":970, "y":1015, "w":95, "h":95, "offX":0,"offY":0,"sourceW":95,"sourceH":95},
+	"homeBg": {"x":0, "y":0, "w":720, "h":423, "offX":0,"offY":0,"sourceW":720,"sourceH":423},
+	"optPanel": {"x":346, "y":1108, "w":220, "h":60, "offX":0,"offY":0,"sourceW":220,"sourceH":60},
+	"orangeBtn": {"x":0, "y":885, "w":560, "h":120, "offX":0,"offY":0,"sourceW":560,"sourceH":120},
+	"quesBlock": {"x":874, "y":833, "w":181, "h":181, "offX":0,"offY":0,"sourceW":181,"sourceH":181},
+	"quesBlockSmall": {"x":878, "y":272, "w":100, "h":151, "offX":0,"offY":0,"sourceW":100,"sourceH":151},
+	"redBtn": {"x":561, "y":705, "w":484, "h":127, "offX":0,"offY":0,"sourceW":484,"sourceH":127},
+	"replayIcon": {"x":979, "y":272, "w":90, "h":90, "offX":0,"offY":0,"sourceW":90,"sourceH":90},
+	"resultPanel": {"x":0, "y":424, "w":560, "h":460, "offX":0,"offY":0,"sourceW":560,"sourceH":460},
+	"returnIcon": {"x":982, "y":101, "w":90, "h":90, "offX":0,"offY":0,"sourceW":90,"sourceH":90},
+	"trueIcon": {"x":567, "y":1108, "w":56, "h":56, "offX":0,"offY":0,"sourceW":56,"sourceH":56},
+	"wordPanel": {"x":561, "y":424, "w":560, "h":280, "offX":0,"offY":0,"sourceW":560,"sourceH":280}
+
+}}

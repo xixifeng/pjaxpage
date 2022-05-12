@@ -1,0 +1,10 @@
+{
+"file": "btns.png"
+,
+"frames": {
+	"greenBtn": {"x":0, "y":387, "w":560, "h":128, "offX":0,"offY":0,"sourceW":560,"sourceH":128},
+	"orangeBtn": {"x":0, "y":258, "w":560, "h":128, "offX":0,"offY":0,"sourceW":560,"sourceH":128},
+	"redBtn": {"x":0, "y":129, "w":560, "h":128, "offX":0,"offY":0,"sourceW":560,"sourceH":128},
+	"yellowBtn": {"x":0, "y":0, "w":560, "h":128, "offX":0,"offY":0,"sourceW":560,"sourceH":128}
+
+}}

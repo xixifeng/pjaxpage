@@ -1,0 +1,11 @@
+{
+"file": "result.png"
+,
+"frames": {
+	"result1": {"x":0, "y":0, "w":290, "h":279, "offX":0,"offY":0,"sourceW":290,"sourceH":279},
+	"result2": {"x":0, "y":280, "w":290, "h":279, "offX":0,"offY":0,"sourceW":290,"sourceH":279},
+	"result3": {"x":291, "y":280, "w":290, "h":279, "offX":0,"offY":0,"sourceW":290,"sourceH":279},
+	"result4": {"x":291, "y":0, "w":290, "h":279, "offX":0,"offY":0,"sourceW":290,"sourceH":279},
+	"result5": {"x":0, "y":560, "w":290, "h":279, "offX":0,"offY":0,"sourceW":290,"sourceH":279}
+
+}}

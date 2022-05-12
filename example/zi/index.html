@@ -1,0 +1,460 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>魔字18</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no,target-densitydpi=device-dpi"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+
+    <meta name="full-screen" content="true"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="360-fullscreen" content="true"/>
+
+    <style>
+        @charset "utf-8";
+        /* css reset */
+        *{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+        html{color:#000;background:#abe5e7;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;}
+        body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+            margin:0;padding:0;
+        }
+        article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {display:block;}
+        audio,canvas,video {display: inline-block;*display: inline;*zoom: 1;}
+        body,button,input,select,textarea{font:12px/1.5 tahoma,arial,\5b8b\4f53;}
+        input,select,textarea{font-size:100%;}
+        table{border-collapse:collapse;border-spacing:0;}
+        th{text-align:inherit;}
+        fieldset,img{ border:0;}
+        iframe{display:block;}
+        abbr,acronym{ border:0;font-variant:normal;}
+        del {text-decoration:line-through;}
+        address,caption,cite,code,dfn,em,th,var { font-style:normal;font-weight:500;}
+        ul,ol{ list-style:none;}
+        caption,th { text-align:left;}
+        h1,h2,h3,h4,h5,h6 {font-size:100%;font-weight:500;}
+        q:before,q:after {content:'';}
+        a:hover {text-decoration:underline;}
+        a {outline:none;}
+        ins,a { text-decoration:none;}
+        .clearfix:after { visibility:hidden; display:block; font-size:0; content:" "; clear:both; height:0;}
+        .clearfix { zoom:1; /* for IE6 IE7 */}
+        body .hide {display:none;}
+        .invisible { visibility: hidden;}
+        .fl,.fr { display:inline;}
+        .fl {float:left;}
+        .fr { float:right;}
+        body {
+            text-align: center;
+            padding: 0;
+            border: 0;
+            margin: 0;
+            height: 100%;
+        }
+        html {
+            -ms-touch-action: none; /* Direct all pointer events to JavaScript code. */
+            font-size: 200%;
+        }
+        div, canvas {
+            display:block;
+            position:absolute;
+            margin: 0 auto;
+            padding: 0;
+            border: 0;
+        }
+        #weChat_tips{
+            display: none;
+            width: 70%;
+            height: 4.4rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 99;
+            background: rgba(0,0,0,0.7);
+            border-radius: 0.4rem;
+            padding: 0.8rem;
+        }
+        #weChat_tips .arrow{
+            width: 0;
+            height: 0;
+            border-bottom: 1rem solid rgba(0,0,0,0.7);
+            border-left: solid 0.4rem transparent;
+            border-right: solid 0.4rem transparent;
+            border-top: 0rem;
+            position: absolute;
+            top: -1rem;
+            right: 2rem;
+        }
+        #weChat_tips .txt{
+            color: #fff;
+            font-size: 1.2rem;
+            font-family: "Microsoft YaHei", simsun;
+            width: 92%;
+            text-align: left;
+            line-height: 1.6rem;
+        }
+        #weChat_tips #close{
+            color: #f00;
+            font-size: 1.2rem;
+            line-height: 1.4rem;
+            text-decoration: underline;
+            width: 6rem;
+            position: absolute;
+            bottom: 0.6rem;
+            right: -1.6rem;
+        }
+        #log{
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            background: #eee;
+            color: #000;
+        }
+        @media (max-width: 719px) {
+            html{
+                font-size: 28px;
+            }
+        }
+        @media (max-width: 639px) {
+            html{
+                font-size: 24px;
+            }
+        }
+        @media (max-width: 532px) {
+            html{
+                font-size: 20px;
+            }
+        }
+        @media (max-width: 479px) {
+            html{
+                font-size: 16px;
+            }
+        }
+        @media (max-width: 319px) {
+            html{
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="log">
+
+</div>
+<div style="position:relative; background-color: #abe5e7" id="gameDiv"></div>
+<div id="weChat_tips">
+    <div class="arrow"></div>
+    <div class="txt">点击右上角按钮，分享到朋友圈，和微信好友一起比拼。</div>
+    <div id="close">关闭</div>
+</div>
+<script>var document_class = "Main";</script><!--这部分内容在编译时会被替换，要修改文档类，请到工程目录下的egretProperties.json内编辑。-->
+<script src="launcher/egret_require.js"></script>
+<script src="launcher/egret_loader.js"></script>
+<script src="launcher/game-min.js"></script>
+<script src="launcher/zepto.min.js"></script>
+<script>
+//优化添加的代码
+    (function(){
+        var bridge = window.WebViewJavascriptBridge; //ios上通过桥接方式与客户端通信
+        var egretUtil = {
+            "isWeiXin" : function() {
+                var ua = navigator.userAgent;
+                var str=ua.match(/MicroMessenger/i);
+                if(str=="MicroMessenger") {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+
+            "isQQ" : function() {
+                var ua = navigator.userAgent;
+                var str = ua.match(/QQ/i);
+                if (str == "QQ") {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+
+            "getQueryString" : function(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return decodeURI(r[2]);
+                return null;
+            },
+
+            "isIOS" : function() {
+                var u = navigator.userAgent, app = navigator.appVersion;
+                var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+                return isiOS;
+            },
+
+            "isAndroid" : function() {
+                var u = navigator.userAgent, app = navigator.appVersion;
+                var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+                return isAndroid;
+            },
+
+            "isApp" : function() {
+                var client = window.EgretUtil.getQueryString("client");
+                return client == "c";
+            }, 
+
+            "share" : function(title, content, imageUrl, targetUrl) {
+                if(window.EgretUtil.isWeiXin() || window.EgretUtil.isQQ()) {
+                    window.showTips4WeChat();//微信和QQ内置浏览器弹窗分享引导提示
+                } else if(window.EgretUtil.isApp()) {
+                    if(window.EgretUtil.isAndroid()) {
+                        if(window["kkdict"]) {
+                            window["kkdict"]["share"](title, content, imageUrl, targetUrl);
+                        }
+                    } else if(window.EgretUtil.isIOS()) {
+                        window["EgretUtil"]["shareIOS"](title, content, imageUrl, targetUrl);
+                    }
+                }
+            },
+
+            "shareIOS" : function(title, content, imageUrl, targetUrl) {
+                if (bridge) {
+                    bridge.callHandler('gameShare', {
+                        'title': title,
+                        'content': content,
+                        'imageUrl': imageUrl,
+                        'targetUrl':targetUrl
+                    }, function(response) {
+                        console.log('ios JS shareIOS got response', response)
+                    })
+                }
+            },
+
+            "close" : function() {
+                if(window.EgretUtil.isAndroid()) {
+                    if(window["kkdict"]) {
+                        window["kkdict"]["close"]();
+                    }
+                } else if(window.EgretUtil.isIOS()) {
+                    window["EgretUtil"]["closeIOS"]();
+                }
+            },
+
+            "closeIOS" : function() {
+                if (bridge) {
+                    bridge.callHandler('gameBack', {}, function(response) {
+                        console.log('ios JS closeIOS got response', response)
+                    })
+                }
+            }
+        };
+
+        window.EgretUtil = egretUtil;
+
+        //定义初始化桥接的函数
+        function connectWebViewJavascriptBridge(callback) {
+            if (bridge) {
+                callback()
+            } else {
+                document.addEventListener('WebViewJavascriptBridgeReady', function() {
+                    bridge = window.WebViewJavascriptBridge;
+                    callback()
+                }, false)
+            }
+        }
+
+        //ios上通过桥接方式与客户端通信，此处进行初始化
+        connectWebViewJavascriptBridge(function() {
+            bridge.init(function(message, responseCallback) {
+                console.log('ios Received message: ' + message);
+                if (responseCallback) {
+                    responseCallback("Right back atcha")
+                }
+            })
+        })
+    })()
+</script>
+<script>
+    window.shareData = {    //todo
+        "imgUrl": "http://szhuodong.duowan.com/s/canvas/Homophony2/resource/assets/shareIcon.png",
+        "timeLineLink": "http://szhuodong.duowan.com/s/canvas/Mozi18/release/index.html",
+        "tTitle": "魔字18",
+        "tContent": "传说，从来没有人能给通过十八层考验，认出所有的“魔字”！你，可以吗？"
+    };
+
+    var mebtnopenurl = 'http://szhuodong.duowan.com/s/canvas/Mozi18/release/index.html';
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+
+        WeixinJSBridge.on('menu:share:appmessage', function(argv) {
+            WeixinJSBridge.invoke('sendAppMessage', {
+                "img_url": window.shareData.imgUrl,
+                "link": window.shareData.timeLineLink,
+                "desc": window.shareData.tContent,
+                "title": window.shareData.tTitle
+            }, function(res) {
+                //ya.reportProductEvent({eid:"click/primary/share/appmessage", eid_desc :"点击/小学版/分享/分享给朋友", pro : "kkdict", gam : "null", gse : "null", rso: "website"});
+                document.location.href = mebtnopenurl;
+            })
+        });
+
+        WeixinJSBridge.on('menu:share:timeline', function(argv) {
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.timeLineLink,
+                "desc": window.shareData.tContent,
+                "title": window.shareData.tContent
+            }, function(res) {
+                //ya.reportProductEvent({eid:"click/primary/share/timeline", eid_desc :"点击/小学版/分享/分享到朋友圈", pro : "kkdict", gam : "null", gse : "null", rso: "website"});
+                document.location.href = mebtnopenurl;
+            });
+        });
+
+
+        WeixinJSBridge.on('menu:share:weibo', function(argv) {
+            WeixinJSBridge.invoke('shareWeibo', {
+                "content": window.shareData.tContent,
+                "url": window.shareData.timeLineLink
+            }, function(res) {
+                //ya.reportProductEvent({eid:"click/primary/share/weibo", eid_desc :"点击/小学版/分享/分享到腾讯微博", pro : "kkdict", gam : "null", gse : "null", rso: "website"});
+                document.location.href = mebtnopenurl;
+            });
+        });
+
+    }, false);
+    (function($){
+        var HOST = window.location.host;
+        var SERVER;
+        
+        // http://localhost:9000/ziService/findZis
+        // http://kkdict.game.yy.com/game/mozi.do
+        // http://192.168.8.10/ziService/findZis
+        if( HOST === 'tenetrouter.oicp.net:8989' ) {
+            SERVER = 'http://tenetrouter.oicp.net:8989/ziService/findZis';
+        } else if( HOST === '192.168.8.10') {
+            SERVER = 'http://192.168.8.10/ziService/findZis';
+        } else if( HOST === 'xixifeng.com.gitee.io' ) {
+        	SERVER = 'http://xixifeng.com/findZis.php';
+        } else {
+            SERVER = 'http://localhost:9000/ziService/findZis';
+        }
+        
+
+        var Index = function(){
+            this.init();
+        }
+        Index.prototype = {
+            localData:{
+                "times":0,
+                "score":0,
+                "rank":0
+            },
+            urlInfo:{"os":"undefined"},
+            uri:'',
+            init:function(){
+                var url = location.href;
+                url = url.split("?");
+                if(url[1]){
+                    url = url[1].split("&");
+                    for(var i=0;i<url.length;i++){
+                        var para = url[i].split("=");
+                        this.urlInfo[para[0]] = para[1];
+                    }
+                }
+                this.bindEvent();
+            },
+            bindEvent:function(){
+                document.getElementById("close").addEventListener("touchend",function(e){
+                    $("#weChat_tips").hide(200);
+                });
+//                $(document).on("tap","#weChat_tips .close",function(e){
+//                    $("#weChat_tips").hide(200);
+//                });
+            },
+            returnAppHome:function(){
+                window.EgretUtil.close();
+            },
+            getGameData:function(fn){
+                this.ajax(SERVER,{},"get",function(data){
+                    fn&&fn(data.data);
+                });
+            },
+            saveData2Local:function(data){
+                var _this = this;
+                if(_this.getLocalData()){
+                    _this.localData.times += data.times;
+                    _this.localData.score = _this.localData.score<data.score?data.score:_this.localData.score;
+                    _this.localData.rank = _this.localData.rank<data.rank?data.rank:_this.localData.rank;
+                    //_this.renderPage();
+                    window.localStorage["gameDataMi18"] = JSON.stringify(_this.localData);
+                }
+            },
+            getLocalData:function(){
+                var _this = this;
+                if(window.localStorage){
+                    return window.localStorage["gameDataMi18"]?_this.localData = JSON.parse(window.localStorage["gameDataMi18"]):_this.localData;
+                }
+                return void(0);
+            },
+            shareGame:function(){
+                window.EgretUtil.share("魔字18",window.shareData.tContent,window.shareData.imgUrl,window.shareData.timeLineLink);
+            },
+            ajax:function(url,data,type,fn){
+                $.ajax({
+                    type : type||'POST',
+                    dataType : "jsonp",
+                    jsonp:"callback",
+                    data: data || "",
+                    url  : url,
+                    async : false,
+                    cache : false,
+                    success : function(data){
+                        console.log("请求到的数据",data);
+                        fn && fn(data);
+                    },
+                    error:function(){
+                        alert("请求资源失败");
+                    }
+                });
+            }
+        }
+        window.PageApp = new Index();
+        window.showTips4WeChat = function(){
+            $("#weChat_tips").show(200);
+        };
+        window.hideTips4WeChat = function(){
+            $("#weChat_tips").hide(200);
+        };
+        window.isKKclient = function(){
+            return window.EgretUtil.isApp();
+        };
+        window.openMoreGame = function(){
+            if(!window.kkdict || !((typeof window.PageApp.urlInfo["os"] != "undefined") && window.PageApp.urlInfo["os"]=="i")){
+                location.href = "http://zidian.kuaikuai.cn/client/autodownload";
+            }else{
+                if(window.kkdict){
+                    window.kkdict.openKKDictInMarket();
+                }else if((typeof window.PageApp.urlInfo["os"] != "undefined") && window.PageApp.urlInfo["os"]=="i"){
+                    document.location = "window.kkdict.openKKDictInMarket()";
+                }else{
+                    location.href = "http://sz.duowan.com/s/lobby4test/index.html";
+                }
+            }
+        };
+        window.onerror = function(){
+            var s = JSON.stringify(arguments);
+            $("#log").append(s);
+        };
+        window.log = function(data){
+            var s = JSON.stringify(data);
+            $("#log").append(s);
+        };
+        egret_h5.startGame();
+    })(Zepto);
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+"file": "optBtn.png"
+,
+"frames": {
+	"menuBtn": {"x":0, "y":805, "w":90, "h":90, "offX":0,"offY":0,"sourceW":90,"sourceH":90},
+	"startBtn": {"x":721, "y":0, "w":241, "h":241, "offX":0,"offY":0,"sourceW":241,"sourceH":241},
+	"startPageBg": {"x":0, "y":0, "w":720, "h":804, "offX":0,"offY":0,"sourceW":720,"sourceH":804}
+
+}}

@@ -1,0 +1,14 @@
+{
+"resources":
+	[
+		{"name":"sprite","type":"sheet","url":"assets/Sprites.json"},
+        {"name":"result","type":"sheet","url":"assets/result.json"},
+        {"name":"btns","type":"sheet","url":"assets/btns.json"},
+        {"name":"optBtn","type":"sheet","url":"assets/optBtn.json"}
+	],
+
+"groups":
+	[
+        {"name":"preload","keys":"sprite,result,btns,optBtn"}
+	]
+}

@@ -1,0 +1,15 @@
+body{
+background-color: #FAF7ED;
+/*color: #4d4d4d;*/
+/*word-spacing: -0.1em;*/
+/*letter-spacing: -0.06em;*/
+/* line-height:1.8em;*/
+line-height: 1.6875em;
+font-size:130%;
+/*font-family:Monaco;*/
+overflow-x:hidden;
+font-family: 'Open Sans', sans-serif;
+overflow-y:auto;}
+.viewport{ max-width:640px; min-width:300px; margin:0 auto;}
+a { padding-right: 50px;}
+input {width:50px;}
