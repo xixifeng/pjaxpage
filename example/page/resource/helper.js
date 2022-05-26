@@ -96,6 +96,6 @@ function textCopy(t) {
   document.execCommand("copy");
   copytemporaryObj.hide();
 }
-$("p").on("dblclick",function(){
+$("body").on("dblclick", "p", function(){
   textCopy($(this).text());
 });
