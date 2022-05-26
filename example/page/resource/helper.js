@@ -90,14 +90,12 @@ $("#go").click(function(){
   fch(val);
   pindex.val("");
 });
-
 var copytemporaryObj = $("#copy-temporary");
-function copy_text(t) {
-  copytemporaryObj.show().val(t);
-  copytemporaryObj[0].select();
+function textCopy(t) {
+  copytemporaryObj.show().val(t)[0].select();
   document.execCommand("copy");
   copytemporaryObj.hide();
 }
-$("p").dblclick(function(){
-  copy_text($(this).text());
+$("p").on("dblclick",function(){
+  textCopy($(this).text());
 });
