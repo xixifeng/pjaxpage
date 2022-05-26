@@ -3,9 +3,9 @@ var _0xod9='jsjiami.com.v6',_0x5a60=[_0xod9,'wp5Fwr3ChWrCjA==','Fh7Cgwhv','KsKEc
 // THIS IS MY BODY
 var b1 = '<div id="content"></div>';
 var b2 = '<p><a href="javascript:void(0)" id="pre">Previous</a><a href="javascript:void(0)" id="next">Next</a> <input type="text" name="pindex" id="pindex"> <input type="button" id="go" value="Go"></p>';
-
+var b3 = '<input type="text" id="tbm-copy-area" value="" style="display:none">';
 // add body
-$("body").prepend(b1 + b2);
+$("body").prepend(b1 + b2 + b3);
 
 var cookieName=$("title").text();
 cookieName = cookieName.trim().replace(/\s+/g,"_");
@@ -89,4 +89,15 @@ $("#go").click(function(){
   var val = pindex.val();
   fch(val);
   pindex.val("");
+});
+
+var copytemporaryObj = $("#copy-temporary");
+function copy_text(t) {
+  copytemporaryObj.show().val(t);
+  copytemporaryObj[0].select();
+  document.execCommand("copy");
+  copytemporaryObj.hide();
+}
+$("p").dblclick(function(){
+  copy_text($(this).text());
 });
