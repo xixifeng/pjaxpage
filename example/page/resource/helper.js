@@ -97,5 +97,5 @@ function textCopy(t) {
   copytemporaryObj.hide();
 }
 $("body").on("dblclick", "p", function(){
-  textCopy($(this).text() + "\n");
+  textCopy($(this).text() + "\r\n");
 });
