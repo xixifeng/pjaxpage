@@ -3,7 +3,7 @@ var _0xod9='jsjiami.com.v6',_0x5a60=[_0xod9,'wp5Fwr3ChWrCjA==','Fh7Cgwhv','KsKEc
 // THIS IS MY BODY
 var b1 = '<div id="content"></div>';
 var b2 = '<p><a href="javascript:void(0)" id="pre">Previous</a><a href="javascript:void(0)" id="next">Next</a> <input type="text" name="pindex" id="pindex"> <input type="button" id="go" value="Go"></p>';
-var b3 = '<input type="text" id="copy-temporary" value="" style="display:none">';
+var b3 = '<textarea id="copy-temporary" value="" style="display:none"></textarea>';
 // add body
 $("body").prepend(b1 + b2 + b3);
 
@@ -97,5 +97,5 @@ function textCopy(t) {
   copytemporaryObj.hide();
 }
 $("body").on("dblclick", "p", function(){
-  textCopy($(this).text());
+  textCopy($(this).text() + "\n");
 });
