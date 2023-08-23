@@ -40,7 +40,49 @@ function getCookie(cname)
 }
 
 var contentObj = $("#content");
+// 缓存
+var fetchCache = function(num)
+{
+ var cacheNumOfPage = localStorage.getItem(cookieName + num);
+ if(cacheNumOfPage == null)
+ {
+  fetch("p"+num+".html").then(function (res)
+  {
+    if(res.status != 404)
+    {
+       return res.text();
+    }
+  }
+  ).then(
+   function(body)
+   {
+     if(body != undefined)
+     {
+       body=$.uncodestr(body);
+       body = (body +"").replace(/\|/g,"");
+       // 缓存
+       localStorage.setItem(cookieName + num, body);
+       fetchCache(num + 1);
+     }
+   }
+  );
+ }
+}
+fetchCache(1);
+// 缓存 end
+
 var fch = function(num) {
+  // 渲染缓存
+    var cacheNumOfPage = localStorage.getItem(cookieName + num);
+    if(cacheNumOfPage != null)
+    {
+      putCookie(num);
+      contentObj.html(cacheNumOfPage);
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+      return;
+    }
+  // 渲染缓存 end
+
   fetch("p"+num+".html")
 .then(function (res) 
 {
