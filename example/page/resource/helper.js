@@ -106,6 +106,7 @@ var fch = function(num) {
    body = (body +"").replace(/\|/g,"");
    contentObj.html(body);
    document.body.scrollTop = document.documentElement.scrollTop = 0;
+   fetchCache(parseInt(num) + 1);
  }
 );
 };
@@ -131,12 +132,21 @@ $("#next").click(function(){
  fch(getNum()+1);
 });
 
-$("#go").click(function(){
+var goHand = function() {
   var pindex = $("#pindex");
   var val = pindex.val();
   fch(val);
   pindex.val("");
+};
+$("#go").click(function(){
+ goHand();
 });
+$("#pindex").keyup(function(event){
+  if(event.keyCode ==13){
+     goHand();
+  }
+});
+
 var copytemporaryObj = $("#copy-temporary");
 function textCopy(t) {
   copytemporaryObj.show().val(t)[0].select();
