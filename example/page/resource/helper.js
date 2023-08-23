@@ -106,7 +106,7 @@ var fch = function(num) {
    body = (body +"").replace(/\|/g,"");
    contentObj.html(body);
    document.body.scrollTop = document.documentElement.scrollTop = 0;
-   fetchCache(parseInt(num) + 1);
+   setTimeout(function(){fetchCache(parseInt(num) + 1);}, 1800000 );
  }
 );
 };
