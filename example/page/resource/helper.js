@@ -139,10 +139,10 @@ var goHand = function() {
   var val = pindex.val();
   fch(val);
   pindex.val("");
+pevent();
 };
 $("#go").click(function(){
  goHand();
-pevent();
 });
 $("#pindex").keyup(function(event){
   if(event.keyCode ==13){
