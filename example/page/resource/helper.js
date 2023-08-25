@@ -215,7 +215,7 @@ $("#content p").on("mouseup touchend", function(){
       else if(thisHtml.indexOf(selectText) != -1)
       {
         // add coloer
-        thisHtml = thisHtml.replace(selectText,"<span style=\"display:none;\" id=\"p"+index+"_"+new Date().getTime()+"\"></span>" + wrapText);
+        thisHtml = thisHtml.replace(selectText,"<span id=\"p"+index+"_"+new Date().getTime()+"\"></span>" + wrapText);
         localStorage.setItem(wordMark, thisHtml);
         thisObj.html(thisHtml);
         markProcess();
