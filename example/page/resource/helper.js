@@ -183,6 +183,7 @@ var fch = function(num) {
    body=$.uncodestr(body);
    body = (body +"").replace(/\|/g,"");
    contentObj.html(body);
+   pevent();
    document.body.scrollTop = document.documentElement.scrollTop = 0;
    setTimeout(function(){fetchCache(parseInt(num) + 1);}, 1800000 );
  }
@@ -204,12 +205,10 @@ var getNum = function()
 
 $("#pre").click(function(){
  fch(getNum()-1);
-pevent();
 });
 
 $("#next").click(function(){
  fch(getNum()+1);
-pevent();
 });
 
 var goHand = function() {
@@ -217,7 +216,6 @@ var goHand = function() {
   var val = pindex.val();
   fch(val);
   pindex.val("");
-pevent();
 };
 $("#go").click(function(){
  goHand();
