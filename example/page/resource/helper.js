@@ -203,7 +203,7 @@ $("#content p").on("mouseup touchend", function(){
       var wrapText = "<span class=\"mark\">"+selectText+"</span>";
       var thisHtml = thisObj.html();
       
-      var wordMark = cookieName + "_p__" + index;
+      var wordMark = cookieName + getCookie(cookieName) + "_p__" + index;
       
       if(thisHtml.indexOf(wrapText) != -1)
       {
@@ -224,7 +224,7 @@ $("#content p").on("mouseup touchend", function(){
       
    
 }).each(function(i,e){
-  var cacheKey = cookieName + "_p__" + i;
+  var cacheKey = cookieName + getCookie(cookieName) + "_p__" + i;
   var cacheVal = localStorage.getItem(cacheKey);
   if(cacheVal != null)
   {
