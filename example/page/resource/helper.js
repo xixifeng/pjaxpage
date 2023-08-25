@@ -78,6 +78,7 @@ var fch = function(num) {
     {
       putCookie(num);
       contentObj.html(cacheNumOfPage);
+      pevent();
       document.body.scrollTop = document.documentElement.scrollTop = 0;
       return;
     }
