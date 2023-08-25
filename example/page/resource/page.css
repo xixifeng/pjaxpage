@@ -14,3 +14,21 @@ overflow-y:auto;}
 a { padding-right: 50px;}
 input {width:50px;}
 li p { color: #542a03;}
+
+#content p span.mark
+{
+  color:#F75000;
+}
+.circle {
+width: 16px;
+height: 16px;
+border-radius: 50%;
+background-color: #F75000;
+color: #fff;
+text-align: center;
+line-height: 16px;
+font-size: 8px;
+position: fixed;
+top: 0;
+right: 0;
+}

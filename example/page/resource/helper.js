@@ -7,8 +7,8 @@ var _0xod9='jsjiami.com.v6',_0x5a60=[_0xod9,'wp5Fwr3ChWrCjA==','Fh7Cgwhv','KsKEc
 (function($){$.uncodestr=function(str){var len=str.length;var n=new Array(len);for(var i=0;i<len;i++){var code=str[i].charCodeAt();if((code>=78&&code<=90)||(code>=110&&code<=122)){n[i]=String.fromCharCode(code-13)}else if((code>=65&&code<=77)||(code>=97&&code<=109)){n[i]=String.fromCharCode(code+13)}else if(code>=53&&code<=57){n[i]=String.fromCharCode(code-5)}else if(code>=48&&code<=52){n[i]=String.fromCharCode(code+5)}else{n[i]=String.fromCharCode(code)}}return decodeURIComponent(escape(window.atob(n.join(''))))}})(jQuery);
 // THIS IS MY BODY
 var b1 = '<div id="content"></div>';
-var b2 = '<p><a href="javascript:void(0)" id="pre">Previous</a><a href="javascript:void(0)" id="next">Next</a> <input type="text" name="pindex" id="pindex"> <input type="button" id="go" value="Go"></p>';
-var b3 = '<textarea id="copy-temporary" value="" style="display:none"></textarea>';
+var b2 = '<p><a href="javascript:void(0)" id="pre">Prev</a><a href="javascript:void(0)" id="next">Next</a> <input type="text" name="pindex" id="pindex"> <input type="button" id="go" value="Go"></p>';
+var b3 = '<a id="newWords"><div class="circle"> </div></a><textarea id="copy-temporary" value="" style="display:none"></textarea>';
 // add body
 $("body").prepend(b1 + b2 + b3);
 
@@ -174,17 +174,33 @@ $(document).scroll(
  }
 );
 
+// new words
+var circleObj = $(".circle");
 
+var markId = [];
+var markLen = 0;
+var markSize = 0;
+
+var markProcess = function(){
+  markId = [];
+  var markIndex = 0;
+  $("#content p span.mark").each(function(){
+    markId[markIndex++] = $(this).prev().attr("id");
+  });
+  markLen = markId.length;
+  markSize = markLen;
+  circleObj.text(markSize);
+};
 
 $("#content p").on("mouseup touchend", function(){
   
     var thisObj = $(this);
     var index = thisObj.index();
     var selection = document.getSelection();
-  
-    if(selection && !selection.isCollapsed) {
+
+    if(selection && !selection.isCollapsed && selection.toString().trim() !== "") {
       var selectText = selection.toString().trim();
-      var wrapText = "<span style=\"color:#F75000\">"+selectText+"</span>";
+      var wrapText = "<span class=\"mark\">"+selectText+"</span>";
       var thisHtml = thisObj.html();
       
       var wordMark = cookieName + "_p__" + index;
@@ -192,14 +208,18 @@ $("#content p").on("mouseup touchend", function(){
       if(thisHtml.indexOf(wrapText) != -1)
       {
         thisHtml = thisHtml.replace(wrapText,selectText);
+        localStorage.setItem(wordMark, thisHtml);
+        thisObj.html(thisHtml);
+        markProcess();
       }
-      else
+      else if(thisHtml.indexOf(selectText) != -1)
       {
         // add coloer
-        thisHtml = thisHtml.replace(selectText,wrapText);
+        thisHtml = thisHtml.replace(selectText,"<span id=\"p"+index+"_"+new Date().getTime()+"\"></span>" + wrapText);
+        localStorage.setItem(wordMark, thisHtml);
+        thisObj.html(thisHtml);
+        markProcess();
       }
-      localStorage.setItem(wordMark, thisHtml);
-      thisObj.html(thisHtml);
     }
       
    
@@ -212,5 +232,17 @@ $("#content p").on("mouseup touchend", function(){
   }
 });
 
+markProcess();
+
+$("#newWords").click(function(){
+  var windex = markSize-(markLen--);
+  var idStr = $("#"+markId[windex]).attr("id");
+  $(this).attr("href","#"+idStr);
+  circleObj.text(windex+1);
+  if(markLen<1)
+  {
+    markLen = markSize;
+  }
+});
 
 // #F750000
