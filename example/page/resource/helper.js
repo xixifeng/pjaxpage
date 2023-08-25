@@ -126,10 +126,12 @@ var getNum = function()
 
 $("#pre").click(function(){
  fch(getNum()-1);
+pevent();
 });
 
 $("#next").click(function(){
  fch(getNum()+1);
+pevent();
 });
 
 var goHand = function() {
@@ -140,6 +142,7 @@ var goHand = function() {
 };
 $("#go").click(function(){
  goHand();
+pevent();
 });
 $("#pindex").keyup(function(event){
   if(event.keyCode ==13){
@@ -192,7 +195,8 @@ var markProcess = function(){
   circleObj.text(markSize);
 };
 
-$("#content p").on("mouseup touchend", function(){
+var pevent = function(){
+$("#content p").off().on("mouseup touchend", function(){
   
     var thisObj = $(this);
     var index = thisObj.index();
@@ -233,6 +237,9 @@ $("#content p").on("mouseup touchend", function(){
 });
 
 markProcess();
+};
+
+pevent();
 
 $("#newWords").click(function(){
   var windex = markSize-(markLen--);
