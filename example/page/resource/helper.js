@@ -176,7 +176,7 @@ $(document).scroll(
 
 
 
-$("p").on("mouseup touchend", function(){
+$("#content p").on("mouseup touchend", function(){
   
     var thisObj = $(this);
     var index = thisObj.index();
@@ -203,10 +203,7 @@ $("p").on("mouseup touchend", function(){
     }
       
    
-});
-
-
-$("#content p").each(function(i,e){
+}).each(function(i,e){
   var cacheKey = cookieName + "_p__" + i;
   var cacheVal = localStorage.getItem(cacheKey);
   if(cacheVal != null)
