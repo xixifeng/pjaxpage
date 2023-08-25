@@ -174,15 +174,46 @@ $(document).scroll(
  }
 );
 
+
+
 $("p").on("mouseup touchend", function(){
+  
+    var thisObj = $(this);
+    var index = thisObj.index();
     var selection = document.getSelection();
+  
     if(selection && !selection.isCollapsed) {
-      var selectText = selection.toString();
-      // 将选中的文本包裹一种颜色
+      var selectText = selection.toString().trim();
       var wrapText = "<span style=\"color:#F75000\">"+selectText+"</span>";
-      //var linehtml = $(this).text().replace(selectText,wrapText);
-      var linehtml = $(this).html().replace(selectText,wrapText);
-      $(this).html(linehtml);
+      var thisHtml = thisObj.html();
+      
+      var wordMark = cookieName + "_p__" + index;
+      
+      if(thisHtml.indexOf(wrapText) != -1)
+      {
+        thisHtml = thisHtml.replace(wrapText,selectText);
+      }
+      else
+      {
+        // add coloer
+        thisHtml = thisHtml.replace(selectText,wrapText);
+      }
+      localStorage.setItem(wordMark, thisHtml);
+      thisObj.html(thisHtml);
     }
+      
+   
 });
 
+
+$("#content p").each(function(i,e){
+  var cacheKey = cookieName + "_p__" + i;
+  var cacheVal = localStorage.getItem(cacheKey);
+  if(cacheVal != null)
+  {
+    $(e).html(cacheVal);
+  }
+});
+
+
+// #F750000
