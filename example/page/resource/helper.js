@@ -173,3 +173,15 @@ $(document).scroll(
    $.cookie(cookieName + "_scroll", t, { expires: 14 });
  }
 );
+
+$("p").mouseup(function(){
+    var selection = document.getSelection();
+    if(selection && !selection.isCollapsed) {
+      var selectText = selection.toString();
+      // 将选中的文本包裹一种颜色
+      var wrapText = "<span style=\"color:#F75000\">"+selectText+"</span>";
+      //var linehtml = $(this).text().replace(selectText,wrapText);
+      var linehtml = $(this).html().replace(selectText,wrapText);
+      $(this).html(linehtml);
+    }
+});
