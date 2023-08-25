@@ -71,6 +71,83 @@ var fetchCache = function(num)
 fetchCache(1);
 // 缓存 end
 
+// new words
+var circleObj = $(".circle");
+
+var markId = [];
+var markLen = 0;
+var markSize = 0;
+
+var markProcess = function(){
+  markId = [];
+  var markIndex = 0;
+  $("#content p span.mark").each(function(){
+    markId[markIndex++] = $(this).prev().attr("id");
+  });
+  markLen = markId.length;
+  markSize = markLen;
+  circleObj.text(markSize);
+};
+
+var pevent = function(){
+$("#content p").off().on("mouseup touchend", function(){
+  
+    var thisObj = $(this);
+    var index = thisObj.index();
+    var selection = document.getSelection();
+
+    if(selection && !selection.isCollapsed && selection.toString().trim() !== "") {
+      var selectText = selection.toString().trim();
+      var wrapText = "<span class=\"mark\">"+selectText+"</span>";
+      var thisHtml = thisObj.html();
+      
+      var wordMark = cookieName + getCookie(cookieName) + "_p__" + index;
+      
+      if(thisHtml.indexOf(wrapText) != -1)
+      {
+        thisHtml = thisHtml.replace(wrapText,selectText);
+        localStorage.setItem(wordMark, thisHtml);
+        thisObj.html(thisHtml);
+        markProcess();
+      }
+      else if(thisHtml.indexOf(selectText) != -1)
+      {
+        // add coloer
+        thisHtml = thisHtml.replace(selectText,"<span id=\"p"+index+"_"+new Date().getTime()+"\"></span>" + wrapText);
+        localStorage.setItem(wordMark, thisHtml);
+        thisObj.html(thisHtml);
+        markProcess();
+      }
+    }
+      
+   
+}).each(function(i,e){
+  var cacheKey = cookieName + getCookie(cookieName) + "_p__" + i;
+  var cacheVal = localStorage.getItem(cacheKey);
+  if(cacheVal != null)
+  {
+    $(e).html(cacheVal);
+  }
+});
+
+markProcess();
+};
+
+pevent();
+
+$("#newWords").click(function(){
+  var windex = markSize-(markLen--);
+  var idStr = $("#"+markId[windex]).attr("id");
+  $(this).attr("href","#"+idStr);
+  circleObj.text(windex+1);
+  if(markLen<1)
+  {
+    markLen = markSize;
+  }
+});
+
+// new words End
+
 var fch = function(num) {
   // 渲染缓存
     var cacheNumOfPage = localStorage.getItem(cookieName + num);
@@ -178,79 +255,3 @@ $(document).scroll(
  }
 );
 
-// new words
-var circleObj = $(".circle");
-
-var markId = [];
-var markLen = 0;
-var markSize = 0;
-
-var markProcess = function(){
-  markId = [];
-  var markIndex = 0;
-  $("#content p span.mark").each(function(){
-    markId[markIndex++] = $(this).prev().attr("id");
-  });
-  markLen = markId.length;
-  markSize = markLen;
-  circleObj.text(markSize);
-};
-
-var pevent = function(){
-$("#content p").off().on("mouseup touchend", function(){
-  
-    var thisObj = $(this);
-    var index = thisObj.index();
-    var selection = document.getSelection();
-
-    if(selection && !selection.isCollapsed && selection.toString().trim() !== "") {
-      var selectText = selection.toString().trim();
-      var wrapText = "<span class=\"mark\">"+selectText+"</span>";
-      var thisHtml = thisObj.html();
-      
-      var wordMark = cookieName + getCookie(cookieName) + "_p__" + index;
-      
-      if(thisHtml.indexOf(wrapText) != -1)
-      {
-        thisHtml = thisHtml.replace(wrapText,selectText);
-        localStorage.setItem(wordMark, thisHtml);
-        thisObj.html(thisHtml);
-        markProcess();
-      }
-      else if(thisHtml.indexOf(selectText) != -1)
-      {
-        // add coloer
-        thisHtml = thisHtml.replace(selectText,"<span id=\"p"+index+"_"+new Date().getTime()+"\"></span>" + wrapText);
-        localStorage.setItem(wordMark, thisHtml);
-        thisObj.html(thisHtml);
-        markProcess();
-      }
-    }
-      
-   
-}).each(function(i,e){
-  var cacheKey = cookieName + getCookie(cookieName) + "_p__" + i;
-  var cacheVal = localStorage.getItem(cacheKey);
-  if(cacheVal != null)
-  {
-    $(e).html(cacheVal);
-  }
-});
-
-markProcess();
-};
-
-pevent();
-
-$("#newWords").click(function(){
-  var windex = markSize-(markLen--);
-  var idStr = $("#"+markId[windex]).attr("id");
-  $(this).attr("href","#"+idStr);
-  circleObj.text(windex+1);
-  if(markLen<1)
-  {
-    markLen = markSize;
-  }
-});
-
-// #F750000
