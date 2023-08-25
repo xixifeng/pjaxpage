@@ -174,7 +174,7 @@ $(document).scroll(
  }
 );
 
-$("p").mouseup(function(){
+$("p").on("mouseup touchend", function(){
     var selection = document.getSelection();
     if(selection && !selection.isCollapsed) {
       var selectText = selection.toString();
@@ -185,3 +185,4 @@ $("p").mouseup(function(){
       $(this).html(linehtml);
     }
 });
+
