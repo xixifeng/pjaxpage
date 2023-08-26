@@ -108,7 +108,7 @@ var markProcess = function(){
           //console.info("word:" + word)
         }
     
-    var result = confirm("确认脱掉如下单词的橙色外衣吗？" + wordsBuffer);
+    var result = confirm("确认脱掉如下单词的橙色外衣吗？\n" + wordsBuffer);
     if(result)
     {
       parentObj.text(parentObj.text().replace("↺",""));
