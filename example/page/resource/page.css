@@ -29,6 +29,12 @@ text-align: center;
 line-height: 16px;
 font-size: 8px;
 position: fixed;
-top: 0;
+top: 4px;
 right: 10px;
+}
+
+sup 
+{
+  color: #F75000; line-height: 0;
+  font-size : 10px;
 }

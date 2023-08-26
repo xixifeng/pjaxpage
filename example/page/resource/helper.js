@@ -81,12 +81,74 @@ var markSize = 0;
 var markProcess = function(){
   markId = [];
   var markIndex = 0;
-  $("#content p span.mark").each(function(){
-    markId[markIndex++] = $(this).prev().attr("id");
+  $("#content p > span.mark").each(function(){
+    var thisObj = $(this);
+    var parentObj = thisObj.parent();
+    markId[markIndex++] = thisObj.prev().attr("id");
+    if(parentObj.children("sup").length === 0)
+    {
+      parentObj.append('<sup class="undo">&#8634;</sup>');
+    }
   });
   markLen = markId.length;
   markSize = markLen;
   circleObj.text(markSize);
+  
+  // 监听撤销按钮
+  $(".undo").off().on("click",function(){
+        var parentObj = $(this).parent("p");
+        var childrens = parentObj.children("span.mark");
+        var len = childrens.length;
+    var wordsBuffer = "";
+        for(var i = len - 1; i>=0; i--)
+        {
+          var wordObj = childrens.eq(i);
+          wordsBuffer += "\n" + wordObj.text();
+          //wordObj.replaceWith(wordObj.text());
+          //console.info("word:" + word)
+        }
+    
+    var result = confirm("确认脱掉如下单词的橙色外衣吗？" + wordsBuffer);
+    if(result)
+    {
+      parentObj.text(parentObj.text().replace("↺",""));
+      var wordMark = cookieName + getCookie(cookieName) + "_p__" + parentObj.index();
+      localStorage.removeItem(wordMark); 
+      markProcess();
+      destroyMarkId();
+    }
+  });
+};
+
+// 废弃无用的锚点 id
+var destroyMarkId = function(){
+  $("#content p span.i").each(function(){
+    var thisObj = $(this);
+    var parentObj = thisObj.parent();
+    var mid = thisObj.attr("id");
+    if($.inArray(mid,markId) == -1)
+    {
+      thisObj.remove();
+    }
+    if(parentObj.children(".mark").length === 0)
+    {
+        parentObj.children("sup").remove();
+    }
+  });
+};
+
+// 判断 searchStr 是否在 spanlist 内
+var searchOfSpanlist = function(searchStr, spanlist)
+{
+  var finded = false;
+  spanlist.each(function(){
+    var targetStr = $(this).text();
+    if(targetStr.indexOf(searchStr) != -1)
+    {
+      finded = true;
+    }
+  });
+  return finded;
 };
 
 var pevent = function(){
@@ -96,8 +158,8 @@ $("#content p").off().on("mouseup touchend", function(){
     var index = thisObj.index();
     var selection = document.getSelection();
 
-    if(selection && !selection.isCollapsed && selection.toString().trim() !== "") {
-      var selectText = selection.toString().trim();
+    var selectText = "";
+    if(selection && !selection.isCollapsed && (selectText = selection.toString().trim()) !== "" && selectText !== "↺") {
       var wrapText = "<span class=\"mark\">"+selectText+"</span>";
       var thisHtml = thisObj.html();
       
@@ -106,16 +168,24 @@ $("#content p").off().on("mouseup touchend", function(){
       if(thisHtml.indexOf(wrapText) != -1)
       {
         thisHtml = thisHtml.replace(wrapText,selectText);
-        localStorage.setItem(wordMark, thisHtml);
         thisObj.html(thisHtml);
+        if(thisObj.children(".mark").length === 0)
+        {
+           localStorage.removeItem(wordMark); 
+        }
+        else
+        {
+           localStorage.setItem(wordMark, thisHtml);
+        }
         markProcess();
+        destroyMarkId();
       }
-      else if(thisHtml.indexOf(selectText) != -1)
+      else if(thisHtml.indexOf(selectText) != -1 && !searchOfSpanlist(selectText, thisObj.children("span.mark") ) )
       {
         // add coloer
-        thisHtml = thisHtml.replace(selectText,"<span id=\"p"+index+"_"+new Date().getTime()+"\"></span>" + wrapText);
-        localStorage.setItem(wordMark, thisHtml);
+        thisHtml = thisHtml.replace(selectText,"<span class=\"i\" id=\"p"+index+"_"+new Date().getTime()+"\"></span>" + wrapText);
         thisObj.html(thisHtml);
+        localStorage.setItem(wordMark, thisHtml);
         markProcess();
       }
     }
@@ -136,13 +206,16 @@ markProcess();
 pevent();
 
 $("#newWords").click(function(){
-  var windex = markSize-(markLen--);
-  var idStr = $("#"+markId[windex]).attr("id");
-  $(this).attr("href","#"+idStr);
-  circleObj.text(windex+1);
-  if(markLen<1)
+  if(markSize > 0)
   {
-    markLen = markSize;
+      var windex = markSize-(markLen--);
+      var idStr = $("#"+markId[windex]).attr("id");
+      $(this).attr("href","#"+idStr);
+      circleObj.text(windex+1);
+      if(markLen<1)
+      {
+        markLen = markSize;
+      }
   }
 });
 
