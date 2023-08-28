@@ -18,14 +18,14 @@ li p { color: #542a03;}
 
 #content p span.mark
 {
-  color:#F75000;
+  color:#d70000;
 }
 .circle,.color {
 display: block;
 width: 16px;
 height: 16px;
 border-radius: 50%;
-background-color: #F75000;
+background-color: #d70000;
 color: #fff;
 text-align: center;
 line-height: 16px;
@@ -41,7 +41,7 @@ right: 10px;
 
 sup 
 {
-  color: #F75000; line-height: 0;
+  color: #d70000; line-height: 0;
   font-size : 10px;
 }
 
