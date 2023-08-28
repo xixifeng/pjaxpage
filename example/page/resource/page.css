@@ -11,15 +11,17 @@ overflow-x:hidden;
 font-family: 'Open Sans', sans-serif;
 overflow-y:auto;}
 .viewport{ max-width:640px; min-width:300px; margin:0 auto;}
-a { padding-right: 50px;}
-input {width:50px;}
+a {text-decoration: none;}
+p a { padding-right: 50px;}
+input {width:50px;border: 1px solid #999;}
 li p { color: #542a03;}
 
 #content p span.mark
 {
   color:#F75000;
 }
-.circle {
+.circle,.color {
+display: block;
 width: 16px;
 height: 16px;
 border-radius: 50%;
@@ -33,8 +35,17 @@ top: 4px;
 right: 10px;
 }
 
+.color {
+ top: 46px; 
+}
+
 sup 
 {
   color: #F75000; line-height: 0;
   font-size : 10px;
+}
+
+.backImg 
+{
+  background-image: url("backimg.webp");
 }
