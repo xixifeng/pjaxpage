@@ -312,7 +312,15 @@ function textCopy(t) {
   copytemporaryObj.hide();
 }
 $("body").on("dblclick", "p", function(){
-  textCopy($(this).text() + "\r\n");
+  var pindex = $(this).index();
+  if(pindex !== 0)
+  {
+    textCopy($(this).text().replace("↺","") + "\r\n");
+  }
+  else
+  {
+    textCopy($("#content").text().replace("↺","") + "\r\n");
+  }
 });
 
 // scroll
@@ -332,3 +340,19 @@ $(document).scroll(
  }
 );
 
+// <- -> 监听这两个符号
+$(document).keyup(function(event){
+  var kc = event.keyCode;
+  if(kc == 37)
+  {
+    // prev
+    fch(getNum()-1);
+    textCopy($("#content").text().replace("↺","") + "\r\n");
+  }
+  if(kc == 39)
+  {
+    // next
+    fch(getNum()+1);
+    textCopy($("#content").text().replace("↺","") + "\r\n");
+  }
+});

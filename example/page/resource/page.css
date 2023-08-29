@@ -12,7 +12,7 @@ font-family: 'Open Sans', sans-serif;
 overflow-y:auto;}
 .viewport{ max-width:640px; min-width:300px; margin:0 auto;}
 a {text-decoration: none;}
-p a { padding-right: 50px;}
+p a { margin-right: 50px;}
 input {width:50px;border: 1px solid #999;}
 li p { color: #542a03;}
 
