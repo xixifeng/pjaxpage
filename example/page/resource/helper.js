@@ -356,3 +356,8 @@ $(document).keyup(function(event){
     textCopy($("#content").text().replace("↺","") + "\r\n");
   }
 });
+
+if(navigator.userAgent.indexOf("Intel Mac OS X")!=-1)
+{
+  $("body").css("color","#FAF7ED");
+}
