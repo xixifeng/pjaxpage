@@ -311,6 +311,24 @@ function textCopy(t) {
   document.execCommand("copy");
   copytemporaryObj.hide();
 }
+var listCp = function()
+{
+    var cpstr = "";
+    var first = true;
+    $("#content p").each(function(){
+       if(first)
+       {  
+          cpstr += $(this).text().replace("↺","") + ". ";
+       }
+       else
+       {  
+          cpstr += $(this).text().replace("↺","") + " ";
+       }
+       first = false;
+    });
+    textCopy(cpstr + "\r\n");
+};
+
 $("body").on("dblclick", "p", function(){
   var pindex = $(this).index();
   if(pindex !== 0)
@@ -319,21 +337,7 @@ $("body").on("dblclick", "p", function(){
   }
   else
   {
-    var cpstr = "";
-    var first = true;
-    $("#content p").each(function(){
-       if(first)
-       {
-          cpstr += $(this).text().replace("↺","") + ". ";
-       }
-       else
-       {
-          cpstr += $(this).text().replace("↺","") + " ";
-       }
-       first = false;
-    });
-    textCopy(cpstr + "\r\n");
-    
+    listCp(); 
     var result = confirm("确认清除本页的缓存吗?");
     if(result)
     {
@@ -366,13 +370,13 @@ $(document).keyup(function(event){
   {
     // prev
     fch(getNum()-1);
-    textCopy($("#content").text().replace("↺","") + "\r\n");
+    listCp();
   }
   if(kc == 39)
   {
     // next
     fch(getNum()+1);
-    textCopy($("#content").text().replace("↺","") + "\r\n");
+    listCp();
   }
 });
 
