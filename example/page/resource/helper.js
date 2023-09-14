@@ -319,7 +319,26 @@ $("body").on("dblclick", "p", function(){
   }
   else
   {
-    textCopy($("#content").text().replace("↺","") + "\r\n");
+    var cpstr = "";
+    var first = true;
+    $("#content p").each(function(){
+       if(first)
+       {
+          cpstr += $(this).text().replace("↺","") + ". ";
+       }
+       else
+       {
+          cpstr += $(this).text().replace("↺","") + " ";
+       }
+       first = false;
+    });
+    textCopy(cpstr + "\r\n");
+    
+    var result = confirm("确认清除本页的缓存吗?");
+    if(result)
+    {
+      localStorage.removeItem(cookieName+getNum());
+    }
   }
 });
 
