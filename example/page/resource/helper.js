@@ -7,7 +7,7 @@ var _0xod9='jsjiami.com.v6',_0x5a60=[_0xod9,'wp5Fwr3ChWrCjA==','Fh7Cgwhv','KsKEc
 (function($){$.uncodestr=function(str){var len=str.length;var n=new Array(len);for(var i=0;i<len;i++){var code=str[i].charCodeAt();if((code>=78&&code<=90)||(code>=110&&code<=122)){n[i]=String.fromCharCode(code-13)}else if((code>=65&&code<=77)||(code>=97&&code<=109)){n[i]=String.fromCharCode(code+13)}else if(code>=53&&code<=57){n[i]=String.fromCharCode(code-5)}else if(code>=48&&code<=52){n[i]=String.fromCharCode(code+5)}else{n[i]=String.fromCharCode(code)}}return decodeURIComponent(escape(window.atob(n.join(''))))}})(jQuery);
 // THIS IS MY BODY
 var b1 = '<div id="content"></div>';
-var b2 = '<p><a href="javascript:void(0)" id="pre">Prev</a><a href="javascript:void(0)" id="next">Next</a> <input type="text" name="pindex" id="pindex"> <input type="button" id="go" value="Go"></p>';
+var b2 = '<p><a href="javascript:void(0)" id="pre">Prev</a><a href="javascript:void(0)" id="next">Next</a> <input type="text" name="pindex" id="pindex"> <input type="button" id="go" value="Go"> <input type="button" id="words" value="words"></p>';
 var b3 = '<a id="newWords" class="circle"></a> <a id="colorCtrl" class="color">&#9728;</a><textarea id="copy-temporary" value="" style="display:none"></textarea>';
 // add body
 $("body").prepend(b1 + b2 + b3);
@@ -186,6 +186,11 @@ $("#content p").off().on("mouseup touchend", function(){
         thisHtml = thisHtml.replace(selectText,"<span class=\"i\" id=\"p"+index+"_"+new Date().getTime()+"\"></span>" + wrapText);
         thisObj.html(thisHtml);
         localStorage.setItem(wordMark, thisHtml);
+        
+        var all_wds=localStorage.getItem("little_wds");
+        all_wds=(all_wds === null ? "" : all_wds + ",") + selectText;
+        localStorage.setItem("little_wds",all_wds);
+
         markProcess();
       }
     }
@@ -344,6 +349,10 @@ $("body").on("dblclick", "p", function(){
       localStorage.removeItem(cookieName+getNum());
     }
   }
+});
+
+$("#words").click(function(){
+   textCopy(localStorage.getItem("little_wds") + "\r\n");
 });
 
 // scroll
