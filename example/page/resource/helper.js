@@ -425,7 +425,7 @@ if( all_wds !== null)
   var wordsArray = JSON.parse(all_wds);
   // 从数组中随机取出 10 个元素
   let randomElements = getRandomElements(wordsArray, 10);
-  textCopy(randomElements + "\r\n");
+  textCopy("Please write an English story for children that contains the following words: [" + randomElements + "], these words, please bold." + "\r\n");
 }
 });
 
