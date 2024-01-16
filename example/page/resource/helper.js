@@ -7,7 +7,7 @@ var _0xod9='jsjiami.com.v6',_0x5a60=[_0xod9,'wp5Fwr3ChWrCjA==','Fh7Cgwhv','KsKEc
 (function($){$.uncodestr=function(str){var len=str.length;var n=new Array(len);for(var i=0;i<len;i++){var code=str[i].charCodeAt();if((code>=78&&code<=90)||(code>=110&&code<=122)){n[i]=String.fromCharCode(code-13)}else if((code>=65&&code<=77)||(code>=97&&code<=109)){n[i]=String.fromCharCode(code+13)}else if(code>=53&&code<=57){n[i]=String.fromCharCode(code-5)}else if(code>=48&&code<=52){n[i]=String.fromCharCode(code+5)}else{n[i]=String.fromCharCode(code)}}return decodeURIComponent(escape(window.atob(n.join(''))))}})(jQuery);
 // THIS IS MY BODY
 var b1 = '<div id="content"></div>';
-var b2 = '<p><a href="javascript:void(0)" id="pre">Prev</a><a href="javascript:void(0)" id="next">Next</a> <input type="text" name="pindex" id="pindex"> <input type="button" id="go" value="Go"> <input type="button" id="words" value="words"></p>';
+var b2 = '<p><a href="javascript:void(0)" id="pre">Prev</a><a href="javascript:void(0)" id="next">Next</a> <input type="text" name="pindex" id="pindex"> <input type="button" id="go" value="Go"> <input type="button" id="words" value="words"></p> <p><input type="text" name="listwds" id="listwds" style="width:60%"> <input type="button" id="clearwords" value="Clear"></p>';
 var b3 = '<a id="newWords" class="circle"></a> <a id="colorCtrl" class="color">&#9728;</a><textarea id="copy-temporary" value="" style="display:none"></textarea>';
 // add body
 $("body").prepend(b1 + b2 + b3);
@@ -20,6 +20,59 @@ var putCookie = function(val)
   document.cookie= cookieName + "="+val+"; expires=Thu, 18 Dec 3000 12:00:00 GMT";
 }
 
+// 单个生词维护
+function delWds(selectText)
+{
+  var all_wds=localStorage.getItem("little_wds");
+  if( all_wds !== null)
+  {
+    var wordsArray = JSON.parse(all_wds);
+    var inputWords = selectText.match(/\w+/g);
+    inputWords.forEach(function(w) {
+      w = w.toLowerCase();
+      wordsArray = wordsArray.filter(function(word) {
+        return word !== w;
+      });
+     });
+
+     let wdsString = JSON.stringify(wordsArray);
+     localStorage.setItem("little_wds",wdsString);
+  }
+}
+
+function addWds(selectText)
+{
+        var all_wds = localStorage.getItem("little_wds");
+        if( all_wds !== null)
+        {
+          var wordsArray = JSON.parse(all_wds);
+          var inputWords = selectText.match(/\w+/g);
+          inputWords.forEach(function(w) {
+            w = w.toLowerCase();
+            if ( w.length > 2 && !wordsArray.includes(w) )
+            {
+              wordsArray.push(w);
+            }
+          });
+          let wdsString = JSON.stringify(wordsArray);
+          localStorage.setItem("little_wds",wdsString);
+        }
+        else
+        {
+          var inputWords = selectText.match(/\w+/g);
+          let uniqueArray = [];
+          for (let i = 0; i < inputWords.length; i++) {
+           let w = inputWords[i];
+           w = w.toLowerCase();
+           if (w.length > 2 && uniqueArray.indexOf(w) === -1) {
+             uniqueArray.push(w);
+           }
+          }
+          let wdsString = JSON.stringify(uniqueArray);
+          localStorage.setItem("little_wds",wdsString);
+        }
+}
+// 单个生词维护 end
 
 // current page 
 var p = getCookie(cookieName);
@@ -111,6 +164,8 @@ var markProcess = function(){
     var result = confirm("确认脱掉如下单词的橙色外衣吗？\n" + wordsBuffer);
     if(result)
     {
+      delWds(wordsBuffer);
+
       parentObj.text(parentObj.text().replace("↺",""));
       var wordMark = cookieName + getCookie(cookieName) + "_p__" + parentObj.index();
       localStorage.removeItem(wordMark); 
@@ -172,6 +227,9 @@ $("#content p").off().on("mouseup touchend", function(){
         if(thisObj.children(".mark").length === 0)
         {
            localStorage.removeItem(wordMark); 
+           
+           // delete wds
+           delWds(selectText);
         }
         else
         {
@@ -187,9 +245,8 @@ $("#content p").off().on("mouseup touchend", function(){
         thisObj.html(thisHtml);
         localStorage.setItem(wordMark, thisHtml);
         
-        var all_wds=localStorage.getItem("little_wds");
-        all_wds=(all_wds === null ? "" : all_wds + ",") + selectText;
-        localStorage.setItem("little_wds",all_wds);
+        // add wds
+        addWds(selectText);
 
         markProcess();
       }
@@ -351,8 +408,49 @@ $("body").on("dblclick", "p", function(){
   }
 });
 
+// 定义函数用于获取指定数量的随机元素
+function getRandomElements(array, count) {
+  let shuffledArray = array.slice(); // 复制数组，以避免修改原数组
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]; // 交换元素位置
+  }
+  return shuffledArray.slice(0, count); // 返回指定数量的随机元素
+}
+
 $("#words").click(function(){
-   textCopy(localStorage.getItem("little_wds") + "\r\n");
+var all_wds=localStorage.getItem("little_wds");
+if( all_wds !== null)
+{
+  var wordsArray = JSON.parse(all_wds);
+  // 从数组中随机取出 10 个元素
+  let randomElements = getRandomElements(wordsArray, 10);
+  textCopy(randomElements + "\r\n");
+}
+});
+
+$("#clearwords").click(function(){
+ let listwds = $("#listwds").val().trim();
+ var result;
+ if(listwds !== "")
+ {
+   result = confirm("Confirm deletion from word pool? \n" + listwds);
+   if(result)
+   {
+     delWds(listwds);
+     $("#listwds").val("");
+   }
+ }
+ else
+ {
+   let allwds = localStorage.getItem("little_wds");
+   allwds = allwds === null ? "The word bank is empty." : allwds;
+   result = confirm("Confirm deletion all words? \n" + allwds);
+   if(result)
+   { 
+     localStorage.removeItem("little_wds");
+   }
+ }
 });
 
 // scroll
