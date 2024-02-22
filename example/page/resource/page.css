@@ -5,13 +5,13 @@ background-color: #FAF7ED;
 /*letter-spacing: -0.06em;*/
 line-height:1.8em;
 /*line-height: 1.6875em;*/
-font-size:28px;
+font-size:130%;
 /*font-family:Monaco;*/
 overflow-x:hidden;
 font-family: 'Open Sans', sans-serif;
 overflow-y:auto;}
 .viewport{ max-width:640px; min-width:300px; margin:0 auto;}
-a {text-decoration: none;font-size: 20px;}
+a {text-decoration: none;}
 p a { margin-right: 50px;}
 input {width:50px;border: 1px solid #999;}
 li p { color: #542a03;}
